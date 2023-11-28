@@ -6,9 +6,22 @@
     <title>Sobre</title>
 </head>
 <body>
-    <h3>Sobre nós</h3>
-    <p>Lorem ipsum dolor sit amet</p>
-    <p>Lorem ipsum dolor sit amet</p>
-    <p>Lorem ipsum dolor sit amet</p>
+    <h2 style="text-align: center;">Diário do Professor</h2>
+    <hr>
+    <!--registro representa um dicionário em específico-->
+    {% for registro in registros %}
+        <details>
+            <summary>{{registro.aluno}}</summary>
+            <p>Nota = {{registro.nota}}</p>
+        </details>
+    {% endfor %}
+    
+    <form action="{{url_for('sobre')}}" method="POST"> <!--Qunado clicar em ENVIAR vai chamar a função sobre()-->
+        <label>Aluno</label>
+        <input type="text" name="aluno" required>
+        <label>Nota</label>
+        <input type="text" name="nota" required>
+        <button type="submit">Enviar</button>
+    </form>
 </body>
 </html>

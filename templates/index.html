@@ -6,8 +6,19 @@
     <title>HTML AO FLASK</title>
 </head>
 <body>
-    <h2>Integração do HTML com o FLASK</h2>
+    <h2 style="text-align: center;">Integração do HTML com o FLASK</h2>
     <hr>
-    {{nome}} tem {{idade}} anos!
+    <ol>
+        {% for fruta in frutas%}
+            <li>{{fruta}}</li>
+        {% endfor %}
+    </ol>
+    <form method="post" action="{{url_for('main')}}">
+        <label>Fruta</label>
+        <input type="text" name="fruta" required>
+        <button type="submit">Enviar</button>
+    </form>
+
+
 </body>
 </html>
