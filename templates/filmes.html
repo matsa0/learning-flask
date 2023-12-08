@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<h2 style="text-align: center;">Movies list</h2>
+<hr>
+<div class="flex-container" style="display: flex; flex-wrap: wrap;  justify-content: space-between;">
+{% for filme in filmes %}
+    <div class="card" style="width: 18rem; margin: 0 0 30px 0;">
+        <img class="card-img-top" src="http://image.tmdb.org/t/p/w500{{filme.backdrop_path}}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{filme.title}}</h5>
+          <p class="card-text">{{filme.overview}}</p>
+          <a href="#" class="btn btn-primary" style="display:flex; justify-content: center; align-items: flex-end; font-weight: 500;"><i class="bi bi-star-fill" style="padding: 0 10px 0 0; font-size: 15px;"></i>{{filme.vote_average}}<i class="bi bi-star-fill" style="padding: 0 0 0 10px; font-size: 15px;"></i></a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock conteudo %}

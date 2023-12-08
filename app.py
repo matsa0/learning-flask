@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-
+import urllib.request, json
 
 #criando a aplicação Flask
 app = Flask(__name__) 
@@ -8,7 +8,7 @@ app = Flask(__name__)
 #criando a rota principal para rodar a aplicação
 frutas = []
 registros = []
-
+    
 @app.route('/', methods=["GET", "POST"]) #aceita solicitações GET e POST
 def main():
     if request.method == "POST": #verifica se a requsição feita é do tipo POST, ou seja, se o usuário submeteu o formulário
@@ -17,7 +17,7 @@ def main():
     return render_template("index.html", frutas=frutas) #o primeiro nome é uma variável
 
 
-    
+
 '''
    Quando um formulário é submetido por método POST, verifica-se se há dados válidos para "aluno" e "nota" no formulário. 
    Se sim, esses dados são usados para criar um novo dicionário contendo as chaves "aluno" e "nota" e seus respectivos valores. 
@@ -33,6 +33,29 @@ def sobre():
 
 
     return render_template("sobre.html", registros=registros) 
+
+
+@app.route('/filmes', methods=["GET", "POST"])
+def filmes():
+    url = "http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=3a3e0df066e2569710e9564721db87a8" #url da api
+    response = urllib.request.urlopen(url) #requisição da api
+
+    data = response.read() #leitura dos dados
+    jsonData = json.loads(data) #conversão para json
+
+    return render_template("filmes.html", filmes=jsonData['results'])#os dados estão dentro dos "results"
+
+
+@app.route('/filmesJson', methods=["GET", "POST"])
+def filmesJson():
+    url = "http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=3a3e0df066e2569710e9564721db87a8" #url da api
+    response = urllib.request.urlopen(url) #requisição da api
+
+    data = response.read() #leitura dos dados
+    jsonData = json.loads(data) #conversão para json
+
+    return jsonData['results']
+
 
 if __name__ == "__main__":
     app.run(debug=True) #rodar a aplicação com debug=true e invés de utilizar 'flask run', 'pyhton3 app.py'

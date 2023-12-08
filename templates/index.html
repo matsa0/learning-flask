@@ -1,24 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML AO FLASK</title>
-</head>
-<body>
-    <h2 style="text-align: center;">Integração do HTML com o FLASK</h2>
-    <hr>
-    <ol>
-        {% for fruta in frutas%}
-            <li>{{fruta}}</li>
-        {% endfor %}
-    </ol>
-    <form method="post" action="{{url_for('main')}}">
-        <label>Fruta</label>
-        <input type="text" name="fruta" required>
-        <button type="submit">Enviar</button>
-    </form>
+{% extends 'base.html' %}
+{% block conteudo %}
+<h2 style="text-align: center;">Integração do HTML com o FLASK</h2>
+<hr>
+<ul class="list-group">
+    {% for fruta in frutas%}
+        <li class="list-group-item">{{fruta}}</li>
+    {% endfor %}
+</ul>
+<form method="post" action="{{url_for('main')}}">
+    <div class="form-group">
+        <label for="exemplo-fruta">Fruta</label>
+        <input type="text" name="fruta" class="form-control" id="exemplo-fruta" placeholder="Digite uma fruta" required>
+    </div>
+    <button type="submit" class="btn btn-success">Enviar</button>
+</form>
+{% endblock conteudo %}
 
-
-</body>
-</html>

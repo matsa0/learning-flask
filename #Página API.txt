@@ -1,0 +1,12 @@
+#API_KEY
+3a3e0df066e2569710e9564721db87a8
+
+#Página API
+http://api.themoviedb.org/3/movie/550?api_key=3a3e0df066e2569710e9564721db87a8
+
+http://image.tmdb.org/t/p/w500
+
+#procurar por popularidade de filmes
+/discover/movie?sort_by=popularity.desc
+
+http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=3a3e0df066e2569710e9564721db87a8

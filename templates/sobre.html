@@ -1,27 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre</title>
-</head>
-<body>
-    <h2 style="text-align: center;">Diário do Professor</h2>
-    <hr>
-    <!--registro representa um dicionário em específico-->
-    {% for registro in registros %}
-        <details>
-            <summary>{{registro.aluno}}</summary>
-            <p>Nota = {{registro.nota}}</p>
-        </details>
-    {% endfor %}
-    
-    <form action="{{url_for('sobre')}}" method="POST"> <!--Qunado clicar em ENVIAR vai chamar a função sobre()-->
-        <label>Aluno</label>
-        <input type="text" name="aluno" required>
+{%extends 'base.html'%}
+{% block conteudo %}
+<h2 style="text-align: center;">Diário do Professor</h2>
+<hr>
+<!--registro representa um dicionário em específico-->
+{% for registro in registros %}
+    <p>
+        <a class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#collapseExample_{{registro.aluno}}" 
+        aria-expanded="false" aria-controls="collapseExample_{{registro.aluno}}">
+            {{registro.aluno}}
+        </a>
+    </p>
+    <div class="collapse" id="collapseExample_{{registro.aluno}}">
+        <div class="card card-body">
+            Nota = {{registro.nota}}
+        </div>
+    </div>
+{% endfor %}
+
+<form action="{{url_for('sobre')}}" method="POST"> <!--Qunado clicar em ENVIAR vai chamar a função sobre()-->
+    <div class="form-group">
+        <label for="exemplo-aluno">Aluno</label>
+        <input type="text" name="aluno" class="form-control" id="exemplo-aluno" placeholder="Digite o nome do aluno" required>
         <label>Nota</label>
-        <input type="text" name="nota" required>
-        <button type="submit">Enviar</button>
-    </form>
-</body>
-</html>
+        <input type="text" name="nota" class="form-control" id="exemplo-nota" placeholder="Digite a nota do aluno" required>
+    </div>
+    <button type="submit" class="btn btn-success">Enviar</button>
+</form>
+{% endblock conteudo %}
