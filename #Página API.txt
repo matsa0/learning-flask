@@ -3,10 +3,24 @@
 
 #Página API
 http://api.themoviedb.org/3/movie/550?api_key=3a3e0df066e2569710e9564721db87a8
-
 http://image.tmdb.org/t/p/w500
 
-#procurar por popularidade de filmes
+#popular
 /discover/movie?sort_by=popularity.desc
-
 http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=3a3e0df066e2569710e9564721db87a8
+
+#kids
+/discover/movie?certification_country=US&certification.lte=G&sort_by=popularity.desc
+http://api.themoviedb.org/3/discover/movie?certification_country=US&certification.lte=G&sort_by=popularity.desc&api_key=3a3e0df066e2569710e9564721db87a8
+
+#2010
+/discover/movie?primary_release_year=2010&sort_by=vote_average.desc
+http://api.themoviedb.org/3/discover/movie?primary_release_year=2010&sort_by=vote_average.desc&api_key=3a3e0df066e2569710e9564721db87a8
+
+#Drama
+/discover/movie?with_genres=18&sort_by=vote_average.desc&vote_count.gte=10
+http://api.themoviedb.org/3/discover/movie?with_genres=18&sort_by=vote_average.desc&vote_count.gte=10&api_key=3a3e0df066e2569710e9564721db87a8
+
+#Tom Cruise
+/discover/movie?with_genres=878&with_cast=500&sort_by=vote_average.desc
+http://api.themoviedb.org/3/discover/movie?with_genres=878&with_cast=500&sort_by=vote_average.desc&api_key=3a3e0df066e2569710e9564721db87a8

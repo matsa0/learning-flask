@@ -35,9 +35,20 @@ def sobre():
     return render_template("sobre.html", registros=registros) 
 
 
-@app.route('/filmes', methods=["GET", "POST"])
-def filmes():
-    url = "http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=3a3e0df066e2569710e9564721db87a8" #url da api
+#rota dinâmica
+@app.route('/filmes/<parameter>', methods=["GET", "POST"])
+def filmes(parameter):
+    if parameter == "popular":
+        url = "http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=3a3e0df066e2569710e9564721db87a8"
+    elif parameter == "kids":
+        url = "http://api.themoviedb.org/3/discover/movie?certification_country=US&certification.lte=G&sort_by=popularity.desc&api_key=3a3e0df066e2569710e9564721db87a8"
+    elif parameter == "2010":
+        url = "http://api.themoviedb.org/3/discover/movie?primary_release_year=2010&sort_by=vote_average.desc&api_key=3a3e0df066e2569710e9564721db87a8"
+    elif parameter == "drama":
+        url = "http://api.themoviedb.org/3/discover/movie?with_genres=18&sort_by=vote_average.desc&vote_count.gte=10&api_key=3a3e0df066e2569710e9564721db87a8"
+    elif parameter == "tom_cruise":
+        url = "http://api.themoviedb.org/3/discover/movie?with_genres=878&with_cast=500&sort_by=vote_average.desc&api_key=3a3e0df066e2569710e9564721db87a8"
+    
     response = urllib.request.urlopen(url) #requisição da api
 
     data = response.read() #leitura dos dados
