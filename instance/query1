@@ -1,0 +1,9 @@
+SELECT * FROM cursos;
+
+INSERT INTO cursos (nome, descricao, carga_horaria)
+VALUES
+("HTML5 & CSS3", "Desenvolvimento web HTML e CSS", 10);
+
+UPDATE cursos
+SET carga_horaria = 8
+WHERE id = 2;

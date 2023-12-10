@@ -1,14 +1,31 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import urllib.request, json
+from flask_sqlalchemy import SQLAlchemy
 
 #criando a aplicação Flask
 app = Flask(__name__) 
 
-
-#criando a rota principal para rodar a aplicação
 frutas = []
 registros = []
-    
+
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dbCurso.sqlite3'
+db = SQLAlchemy(app)
+
+class cursos(db.Model):
+    id = db.Column(db.Integer,  primary_key=True, autoincrement=True)
+    nome = db.Column(db.String(50))
+    descricao = db.Column(db.String(100))
+    carga_horaria = db.Column(db.Integer)
+
+    #construtor para cursos
+    def __init__(self, nome, descricao, carga_horaria):
+        self.nome = nome
+        self.descricao = descricao
+        self.carga_horaria = carga_horaria
+
+
+#criando a rota principal para rodar a aplicação
 @app.route('/', methods=["GET", "POST"]) #aceita solicitações GET e POST
 def main():
     if request.method == "POST": #verifica se a requsição feita é do tipo POST, ou seja, se o usuário submeteu o formulário
@@ -29,8 +46,6 @@ def sobre():
     if request.method == "POST":
         if request.form.get("aluno") and request.form.get("nota"):
             registros.append({"aluno": request.form.get("aluno"), "nota": request.form.get("nota")}) 
-
-
 
     return render_template("sobre.html", registros=registros) 
 
@@ -57,17 +72,31 @@ def filmes(parameter):
     return render_template("filmes.html", filmes=jsonData['results'])#os dados estão dentro dos "results"
 
 
-@app.route('/filmesJson', methods=["GET", "POST"])
-def filmesJson():
-    url = "http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=3a3e0df066e2569710e9564721db87a8" #url da api
-    response = urllib.request.urlopen(url) #requisição da api
-
-    data = response.read() #leitura dos dados
-    jsonData = json.loads(data) #conversão para json
-
-    return jsonData['results']
+@app.route('/cursos', methods=["GET", "POST"])
+def lista_cursos():
+    return render_template("cursos.html", cursos=cursos.query.all()) #query.all() retorna uma lista com todos os registros da tabela cursos
 
 
+@app.route('/cria_curso', methods=["GET", "POST"])
+def cria_curso():
+    nome = request.form.get("nome")
+    descricao = request.form.get("descricao")
+    ch = request.form.get("ch")
+
+    if request.method == "POST":
+        curso = cursos(nome, descricao, ch) #chama a função do construtor
+        db.session.add(curso) #adiciona o curso ao banco de dados
+        db.session.commit() #salvando os valores
+        return redirect(url_for('lista_cursos'))
+
+    return render_template("novo_curso.html")
+
+
+
+
+#ao ser executado
 if __name__ == "__main__":
+    with app.app_context(): #garante que a operação ocorra corretamente dentro do contexto da aplicação
+        db.create_all() #crie o database
     app.run(debug=True) #rodar a aplicação com debug=true e invés de utilizar 'flask run', 'pyhton3 app.py'
     
