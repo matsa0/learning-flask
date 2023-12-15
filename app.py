@@ -1,9 +1,12 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 import urllib.request, json
+import secrets
 from flask_sqlalchemy import SQLAlchemy
 
 #criando a aplicação Flask
 app = Flask(__name__) 
+# Gera uma chave secreta hexadecimal de 16 bytes (32 caracteres)
+app.secret_key = secrets.token_hex(16)  
 
 frutas = []
 registros = []
@@ -79,17 +82,21 @@ def lista_cursos():
 
 @app.route('/cria_curso', methods=["GET", "POST"])
 def cria_curso():
-    nome = request.form.get("nome")
-    descricao = request.form.get("descricao")
-    ch = request.form.get("ch")
-
     if request.method == "POST":
-        curso = cursos(nome, descricao, ch) #chama a função do construtor
-        db.session.add(curso) #adiciona o curso ao banco de dados
-        db.session.commit() #salvando os valores
-        return redirect(url_for('lista_cursos'))
+        nome = request.form.get("nome")
+        descricao = request.form.get("descricao")
+        ch = request.form.get("ch")
+
+        if not nome or not descricao or not ch:
+            flash("Preencha todos os campos do formulário", "error")
+        else:
+            curso = cursos(nome, descricao, ch) # chama a função do construtor
+            db.session.add(curso) # adiciona o curso ao banco de dados
+            db.session.commit() # salvando os valores
+            return redirect(url_for('lista_cursos'))
 
     return render_template("novo_curso.html")
+
 
 
 

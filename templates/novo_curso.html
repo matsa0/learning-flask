@@ -2,14 +2,22 @@
 {%block conteudo%}
 <h2 style="text-align: center;">Novo Curso</h2>
 <hr>
+{%- for message in get_flashed_messages() %} <!--Percorrer as MENSAGENS FLASH que foram definidas no arquivo app.py -->
+    <div class="alert alert-danger d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+        <div>
+        {{message}}
+        </div>
+    </div>
+{%- endfor %}
 <form method="post" action="{{url_for('cria_curso')}}">
     <div class="form-group">
         <label>Nome</label>
-        <input type="text" name="nome" class="form-control" placeholder="Nome do curso" required>
+        <input type="text" name="nome" class="form-control" placeholder="Nome do curso">
         <label>Descrição</label>
-        <input type="text" name="descricao" class="form-control" placeholder="Descrição do curso" required>
+        <input type="text" name="descricao" class="form-control" placeholder="Descrição do curso">
         <label>Carga Horária</label>
-        <input type="number" name="ch" class="form-control" placeholder="Carga horária do curso" required>
+        <input type="number" name="ch" class="form-control" placeholder="Carga horária do curso">
     </div>
     <button type="submit" class="btn btn-success">Adicionar</button>
 </form>
