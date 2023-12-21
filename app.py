@@ -98,6 +98,18 @@ def cria_curso():
     return render_template("novo_curso.html")
 
 
+@app.route('/<int:id>/atualiza_curso', methods=["GET", "POST"]) #quando você edita, precisa de um ID
+def atualiza_curso(id):
+    curso = cursos.query.filter_by(id=id).first() #consulta por id no bd e retorna o primeiro resultado
+    if request.method == "POST":
+        nome = request.form["nome"] #é possível recuperar valores dessa forma também
+        descricao = request.form["descricao"]
+        ch = request.form["ch"]
+
+        cursos.query.filter_by(id=id).update({"nome": nome, "descricao": descricao, "carga_horaria": ch}) #atualiza os valores
+        db.session.commit() #salva as alterações
+        return redirect(url_for('lista_cursos'))
+    return render_template("atualiza_curso.html", curso=curso)
 
 
 

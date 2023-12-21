@@ -2,7 +2,7 @@
 {%block conteudo%}
 <h2 style="text-align: center;">Cursos</h2>
 <hr>
-<a  href="{{url_for('cria_curso')}}" class="btn btn-primary">Adicionar Curso</a>
+<a href="{{url_for('cria_curso')}}" class="btn btn-primary">Adicionar Curso</a>
 <br><br>
 <table class="table table-striped ">
     <thead>
@@ -11,6 +11,7 @@
           <th scope="col">Nome</th>
           <th scope="col">Descrição</th>
           <th scope="col">Carga Horária</th>
+          <th scope="col">Ação</th>
         </tr>
     </thead>
     <tbody>
@@ -20,6 +21,9 @@
                 <td>{{curso.nome}}</td>
                 <td>{{curso.descricao}}</td>
                 <td>{{curso.carga_horaria}}</td>
+                <td>
+                    <a href="{{curso.id}}/atualiza_curso" type="button" class="btn btn-secondary btn-sm">Editar</a>
+                </td>
             </tr>
         {%endfor%}
       </tbody>
