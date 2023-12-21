@@ -11,7 +11,7 @@
           <th scope="col">Nome</th>
           <th scope="col">Descrição</th>
           <th scope="col">Carga Horária</th>
-          <th scope="col">Ação</th>
+          <th scope="col">Ações</th>
         </tr>
     </thead>
     <tbody>
@@ -23,6 +23,7 @@
                 <td>{{curso.carga_horaria}}</td>
                 <td>
                     <a href="{{curso.id}}/atualiza_curso" type="button" class="btn btn-secondary btn-sm">Editar</a>
+                    <a href="{{curso.id}}/remover_curso" type="button" onclick="return confirm('Deseja realmente excluir esse registro?')" class="btn btn-danger btn-sm">Remover</a>
                 </td>
             </tr>
         {%endfor%}
